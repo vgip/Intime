@@ -1,0 +1,15 @@
+{
+    "name": "vgip/intime",
+    "description": "Client Intime API 3",
+    "type": "library",
+    "keywords": ["framework"],
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+	    "Vgip\\Intime\\": "src/Intime"
+        }
+    }
+}
