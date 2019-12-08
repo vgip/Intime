@@ -1,11 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+/**
+ * Api - get data from API
+ */
+
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api;
 
 use Vgip\Intime\Api\ConfigInterface;
-
 use Vgip\Intime\Api\Connection\RestFactory;
 use Vgip\Intime\Api\Connection\SoapFactory;
 use Vgip\Intime\Dir\ActionAccordance;
@@ -17,7 +20,7 @@ class Api //implements ApiInterface
     
     private $resultConnection;
     
-    public function __construct(ConfigInterface $config) 
+    public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
         
@@ -26,6 +29,14 @@ class Api //implements ApiInterface
         $this->resultConnection->setConfig($config);
     }
     
+    /**
+     * Get country
+     *
+     * Wrap for COUNTRY_BY_ID action
+     *
+     * @param int $id
+     * @return ResultConnectionInterface
+     */
     public function getCountry(int $id = null): ResultConnectionInterface
     {
         $data = [];
@@ -39,6 +50,16 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get region (area)
+     *
+     * Wrap for AREA_FILTERED action
+     *
+     * @param int $id
+     * @param int $countryId
+     * @param string $name
+     * @return ResultConnectionInterface
+     */
     public function getRegion(int $id = null, int $countryId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
@@ -60,6 +81,16 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get area (region)
+     *
+     * Alias to getRegion() method
+     *
+     * @param int $id
+     * @param int $countryId
+     * @param string $name
+     * @return ResultConnectionInterface
+     */
     public function getArea(int $id = null, int $countryId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
@@ -69,6 +100,17 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get district
+     *
+     * Wrap for DISTRICT_FILTERED action
+     *
+     * @param int $id
+     * @param int $countryId
+     * @param int $regionId
+     * @param string $name
+     * @return ResultConnectionInterface
+     */
     public function getDistrict(int $id = null, int $countryId = null, int $regionId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
@@ -94,6 +136,14 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get district by id
+     *
+     * Partial functionality of getDistrict() method
+     *
+     * @param int $id
+     * @return ResultConnectionInterface
+     */
     public function getDistrictById(int $id = null): ResultConnectionInterface
     {
         $res = $this->getDistrict($id);
@@ -101,6 +151,14 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get district by region (area) id
+     *
+     * Partial functionality of getDistrict() method
+     *
+     * @param int $regionId
+     * @return ResultConnectionInterface
+     */
     public function getDistrictByRegionId(int $regionId = null): ResultConnectionInterface
     {
         $res = $this->getDistrict(null, null, $regionId);
@@ -108,6 +166,14 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get district by area (region) id
+     *
+     * Partial functionality of getDistrict() method
+     *
+     * @param int $regionId
+     * @return ResultConnectionInterface
+     */
     public function getDistrictByAreaId(int $regionId = null): ResultConnectionInterface
     {
         $res = $this->getDistrictByRegionId($regionId);
@@ -115,6 +181,18 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get locality
+     *
+     * Wrap for LOCALITY_FILTERED action
+     *
+     * @param int $id
+     * @param int $countryId
+     * @param int $regionId
+     * @param int $districtId
+     * @param string $name
+     * @return ResultConnectionInterface
+     */
     public function getLocality(int $id = null, int $countryId = null, int $regionId = null, int $districtId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
@@ -144,6 +222,14 @@ class Api //implements ApiInterface
         return $res;
     }
     
+    /**
+     * Get locality by id
+     *
+     * Partial functionality of getLocality() method
+     *
+     * @param int $regionId
+     * @return ResultConnectionInterface
+     */
     public function getLocalityByRegionId(int $regionId = null): ResultConnectionInterface
     {
         $res = $this->getLocality(null, null, $regionId);
@@ -186,7 +272,7 @@ class Api //implements ApiInterface
     
     /**
      * WARNING: a call without parameters returns a large amount of data
-     * 
+     *
      * @param int $branchId
      * @return type
      */
@@ -331,7 +417,7 @@ class Api //implements ApiInterface
         $connectionTypeLower = mb_strtolower($connectionTypeUpper);
         $connectionType = ucfirst($connectionTypeLower);
         
-        $functionName   = 'createConnectionType'.$connectionType;
+        $functionName   = 'createConnectionType' . $connectionType;
         
         $actionAccordance = ActionAccordance::getInstance();
         $actionApiName  = $actionAccordance->getActionNameIntimeByInternal($action);

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api;
 
@@ -12,9 +12,9 @@ interface ApiInterface
     
     public function getRegion(int $id = null, int $countryId = null, string $name = null);
     
-    /** 
+    /**
      * Smilar (other name) $this->getRegion() method
-     * 
+     *
      * @param int $id
      * @param int $countryId
      * @param string $regionName
