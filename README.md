@@ -116,6 +116,23 @@ print_r($resData);
 
 ```
 
-## Intime server API documentation
 
-Be careful - API server documentation v3.1 contains many errors: [Intime server API documentation](https://intime.ua/ru-api)
+## Intime API documentation
+
+### Client 
+This project documentation: [github wiki](https://github.com/vgip/Intime/wiki)
+
+### Server
+Be careful - API server documentation v3.1 contains many errors: [server documentation](https://intime.ua/ru-api)
+
+
+## Standards
+
+Versioning: MAJOR.MINOR.PATCH version number format.
+
+Codestyle: PSR12
+
+
+## Contributing
+
+Read [documentation](https://github.com/vgip/Intime/wiki), direct your [pull request](https://github.com/vgip/Intime/pulls) and [ask questions](https://github.com/vgip/Intime/issues).
