@@ -240,6 +240,26 @@ class Api //implements ApiInterface
     }
     
     /**
+     * Partial functionality of getBranch() method
+     */
+    public function getBranchById(int $id = null)
+    {
+        $res = $this->getBranch($id);
+        
+        return $res;
+    }
+    
+    /**
+     * Partial functionality of getBranch() method
+     */
+    public function getBranchByRegionId(int $regionId = null)
+    {
+        $res = $this->getBranch(null, null, $regionId);
+        
+        return $res;
+    }
+
+    /**
      * WARNING: a call without parameters returns a large amount of data
      *
      * @param int $branchId
