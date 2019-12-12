@@ -184,6 +184,26 @@ class Api //implements ApiInterface
     }
     
     /**
+     * Partial functionality of getLocality() method
+     */
+    public function getLocalityByAreaId(int $regionId = null): ResultConnectionInterface
+    {
+        $res = $this->getLocality(null, null, $regionId);
+        
+        return $res;
+    }
+    
+    /**
+     * Partial functionality of getLocality() method
+     */
+    public function getLocalityByDistrictId(int $districtId = null): ResultConnectionInterface
+    {
+        $res = $this->getLocality(null, null, null, $districtId);
+        
+        return $res;
+    }
+    
+    /**
      * Wrap for BRANCH_FILTERED action
      */
     public function getBranch(int $id = null, int $countryId = null, int $regionId = null, int $districtId = null, int $localityId = null, string $name = null): ResultConnectionInterface
