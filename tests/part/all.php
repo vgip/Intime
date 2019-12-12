@@ -29,12 +29,14 @@ $intimeApiConfig->setResultDataSkipIfError(true);
 
 $intimeApi              = new IntimeApi($intimeApiConfig);
 
-//$resultConnection         = $intimeApi->getCountry(1);
-//$resultConnection         = $intimeApi->getRegion(2, 1, 1);
+//$resultConnection         = $intimeApi->getCountry(215);
+//$resultConnection         = $intimeApi->getRegion();
+//$resultConnection         = $intimeApi->getArea(null, 215, 'Дніпропетровська');
+$resultConnection         = $intimeApi->getDistrict(null, null, null, "Арбузинський");
 //$resultConnection         = $intimeApi->getDistrictByRegionId(5);
 //$resultConnection         = $intimeApi->getLocality(null, null, 1, 20);
 //$resultConnection         = $intimeApi->getLocality(199);
-$resultConnection         = $intimeApi->getLocalityByRegionId(20);
+//$resultConnection         = $intimeApi->getLocalityByRegionId(20);
 //$resultConnection         = $intimeApi->getBranch(null, null, 18);
 //$resultConnection         = $intimeApi->getBranch(null, null, null, null, 5451);
 //$resultConnection         = $intimeApi->getBranchWorkHours(1554);
@@ -65,11 +67,11 @@ $dataUrlRequest = $resultConnection->getRequestUrl();
 /**$dataRaw        = $resultConnection->getAnswerRaw();
 print_r($dataRaw);*/
 
-/**$dataArrayRaw   = $resultConnection->getAnswerArrayRaw();
-print_r($dataArrayRaw);*/
+$dataArrayRaw   = $resultConnection->getAnswerArrayRaw();
+print_r($dataArrayRaw);
 
-$data           = $resultConnection->getAnswerArray();
-print_r($data); 
+/**$data           = $resultConnection->getAnswerArray();
+print_r($data); */
 
 /** $dataObj        = $resultConnection->getAnswer();
 print_r($dataObj); */
