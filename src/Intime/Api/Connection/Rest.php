@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api\Connection;
 
@@ -32,7 +32,8 @@ class Rest implements RestTypeInterface
         $url = $this->getUrlToRequest($config->getUrl(), $action, $dataMergetWitApiKey, $config->getRestRequestType());
         
         $body = $this->getBodyToRequest($dataMergetWitApiKey, $config->getRestRequestType(), $config->getRestContentType());
-        $config->getResultConnection()->setRequestBody($body);
+        $bodySet = (empty($body)) ? null : $body;
+        $config->getResultConnection()->setRequestBody($bodySet);
         
         return $connection->connect($url, $body);
     }

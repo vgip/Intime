@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api;
 
@@ -12,22 +12,25 @@ class Config implements ConfigInterface
 {
     use ConfigPropertyTrait;
     
-    public function __construct(ConfigInterface $configDefault = null) 
+    public function __construct(ConfigInterface $config = null)
     {
-        if (null !== $configDefault) {
-            $this->setValueDefault($configDefault);
+        if (null !== $config) {
+            $this->setConfigFromObject($config);
+        } else {
+            $configDefault = new ConfigDefault();
+            $configDefault->setDefaultConfig();
+            $this->setConfigFromObject($configDefault);
         }
-        
     }
     
-    private function setValueDefault($configDefault)
+    private function setConfigFromObject(ConfigInterface $config)
     {
         $property       = get_object_vars($this);
-        foreach ($property AS $key => $v) {
+        foreach ($property AS $key => $null) {
             $sourceMethodNameGet = 'get'.ucfirst($key);
             $destinationMethodNameSet = 'set'.ucfirst($key);
             
-            $this->$destinationMethodNameSet($configDefault->$sourceMethodNameGet());
+            $this->$destinationMethodNameSet($config->$sourceMethodNameGet());
         }
     }
 }

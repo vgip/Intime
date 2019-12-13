@@ -7,7 +7,7 @@
  * If $min (Length min) = 0, then the value is automatically considered null.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Type;
 

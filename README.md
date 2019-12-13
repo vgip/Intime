@@ -50,15 +50,12 @@ you can use the "free" key "10000000000001234567".
 <?php
 
 use Vgip\Intime\Api\Config AS IntimeApiConfig;
-use Vgip\Intime\Api\ConfigDefault AS IntimeApiConfigDefault;
 use Vgip\Intime\Api\Api AS IntimeApi;
 
 $apiKey = '10000000000001234567';
 
 /** Set default configuration */
-$intimeApiConfigDefault = new IntimeApiConfigDefault();
-$intimeApiConfigDefault->setDefaultConfig();
-$intimeApiConfig        = new IntimeApiConfig($intimeApiConfigDefault);
+$intimeApiConfig        = new IntimeApiConfig();
 
 /** Set configuration (rewrite defaults) */
 $intimeApiConfig->setKey($apiKey);

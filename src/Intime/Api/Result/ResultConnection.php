@@ -1,6 +1,12 @@
 <?php
-
-declare(strict_types = 1);
+/**
+ * API Connection Result: storage to data from source (API), errors 
+ * and other service data (request parameter and etc). 
+ * 
+ * Initialized automatically from Vgip\Intime\Api\Api. 
+ * Returned by methods $api->getCountry(), $api->createDeclaration(), etc.
+ */
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api\Result;
 
@@ -29,7 +35,6 @@ class ResultConnection implements ResultConnectionInterface
 
     private $resultProcessing;
     
-    
     public function __construct() 
     {
         $this->resultProcessing = new ResultProcessing();
@@ -37,42 +42,38 @@ class ResultConnection implements ResultConnectionInterface
         $this->error = new Error();
     }
 
-    public function setAction(string $action)
-    {
-        $this->action       = $action;
-    }
-    
-    public function getAction() : string
-    {
-        return $this->action;
-    }
-    
-    public function setConfig(ConfigInterface $config)
-    {
-        $this->config = $config;
-    }
-
-    public function getConfig() : ConfigInterface
-    {
-        return $this->config;
-    }
-    
-    public function setAnswerRaw(string $answerRaw)
+    /**
+     * @internal set raw response from API
+     * 
+     * @param string $answerRaw
+     * @return void
+     */
+    public function setAnswerRaw(string $answerRaw): void
     {
         $this->answerRaw = $answerRaw;
     }
     
-    public function getAnswerRaw() : ?string
+    /**
+     * Get raw answer from API as string. If the answer is empty, null will be returned.
+     * 
+     * @return string|null
+     */
+    public function getAnswerRaw(): ?string
     {
         return $this->answerRaw;
     }
     
-    public function getAnswerArrayRaw() : ?array
+    /**
+     * Get the response with the raw data as an array.
+     * 
+     * @return array|null
+     */
+    public function getAnswerArrayRaw(): ?array
     {
         $resultConvertionMethodName = $this->getConvertionMethodName();
         
         if (null === $this->answerRaw) {
-            $dataSource = [];
+            $dataSource = null;
         } else {
             $dataSource = ConverterRaw::$resultConvertionMethodName($this->answerRaw, $this->action);
         }
@@ -80,9 +81,184 @@ class ResultConnection implements ResultConnectionInterface
         return $dataSource;
     }
     
-    public function getAnswerTypeByFlag(string $flagRaw)
+    /**
+     * Get answer as array with converted to internal format keys and values.
+     * 
+     * @return array|null
+     */
+    public function getAnswerArray(): ?array
     {
-        if ('object' === $flagRaw) {
+        $data = $this->getAnswerConvertedByType('array');
+        
+        return $data;
+    }
+    
+    /**
+     * Get an array of objects using get*() methods to access object properties.
+     * 
+     * @return array|null
+     */
+    public function getAnswerObject(): ?array
+    {
+        $data = $this->getAnswerConvertedByType('object');
+        
+        return $data;
+    }
+    
+    /**
+     * If errors occurred while connecting to the API, they will be written 
+     * to Vgip\Intime\Error\Error object. 
+     * 
+     * If the correctness of the incoming data was validated, 
+     * in case of errors found, information about them will 
+     * also be recorded in this object.
+     * 
+     * @return Error
+     */
+    public function getError(): Error
+    {
+        return $this->error;
+    }
+    
+    /**
+     * @internal
+     * 
+     * @param string $action
+     * @return void
+     */
+    public function setAction(string $action): void
+    {
+        $this->action       = $action;
+    }
+    
+    /**
+     * Get action name.
+     * 
+     * E.g. "district", "content_description", "declaration_create", etc, 
+     * depending on the running method from Vgip\Intime\Api\Api 
+     * (getDistrict(), getContentDescription(), createDeclaration() respectively). 
+     * A complete list of titles is available here: Vgip\Intime\Dir\ActionAccordance.
+     * 
+     * @return string
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @internal
+     * 
+     * @param string $requestUrl
+     * @return void
+     */
+    public function setRequestUrl(string $requestUrl): void
+    {
+        $this->requestUrl = $requestUrl;
+    }
+    
+    /**
+     * Get URL address of connection to API
+     * 
+     * @return string|null
+     */
+    public function getRequestUrl(): ?string
+    {
+        return $this->requestUrl;
+    }
+    
+    /**
+     * @internal
+     * 
+     * @param type $requestBody
+     * @return void
+     */
+    public function setRequestBody($requestBody): void 
+    {
+        $this->requestBody = $requestBody;
+    }
+    
+    /**
+     * Get the request body if exists (for GET requests, the body is absent) or null. 
+     * 
+     * Data may contain key for API.
+     * 
+     * @return string|null
+     */
+    public function getRequestBody(): ?string
+    {
+        return $this->requestBody;
+    }
+
+    /**
+     * @internal
+     * 
+     * @param array $requestData
+     * @return void
+     */
+    public function setRequestData(?array $requestData): void
+    {
+        $this->requestData  = $requestData;
+    }
+
+    /**
+     * Get data for request building or null, if data not exists 
+     * (request created without parameters e.g. $api->getCountry()).
+     * 
+     * @return array|null
+     */
+    public function getRequestData(): ?array
+    {
+        return $this->requestData;
+    }
+
+    /**
+     * @internal
+     * 
+     * @param array $connectionData
+     * @return void
+     */
+    public function setConnectionData(array $connectionData): void
+    {
+        $this->connectionData = $connectionData;
+    }
+    
+    /**
+     * Get all connection data as array. 
+     * 
+     * Data may contain key for API.
+     * 
+     * @return array
+     */
+    public function getConnectionData(): array
+    {
+        return $this->connectionData;
+    }
+    
+    /**
+     * @internal
+     * 
+     * @param ConfigInterface $config
+     * @return void
+     */
+    public function setConfig(ConfigInterface $config): void
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @internal
+     * 
+     * @return ConfigInterface
+     */
+    public function getConfig(): ConfigInterface
+    {
+        return $this->config;
+    }
+    
+    private function getAnswerConvertedByType(string $type)
+    {
+        if ('object' === $type) {
             $flag = 'object';
         } else {
             $flag = 'array';
@@ -101,27 +277,6 @@ class ResultConnection implements ResultConnectionInterface
         return $data;
     }
     
-    public function getAnswerArray() : ?array
-    {
-        $data = $this->getAnswerTypeByFlag('array');
-        
-        return $data;
-    }
-    
-    public function getAnswerObject() : ?array
-    {
-        $data = $this->getAnswerTypeByFlag('object');
-        
-        return $data;
-    }
-
-    public function getAnswer()
-    {
-        $res = $this->getAnswerObject();
-        
-        return $res;
-    }
-
     private function getConvertionMethodName()
     {
         $answerFormat = 'Xml';
@@ -139,51 +294,5 @@ class ResultConnection implements ResultConnectionInterface
         $convertionMethodName = 'convert'.$answerFormat.'ToArray';
         
         return $convertionMethodName;
-    }
-    
-    
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    public function setRequestUrl(string $requestUrl)
-    {
-        $this->requestUrl = $requestUrl;
-    }
-    
-    public function getRequestUrl(): ?string
-    {
-        return $this->requestUrl;
-    }
-    
-    public function getRequestBody(): ?string
-    {
-        return $this->requestBody;
-    }
-
-    public function setRequestData(array $requestData)
-    {
-        $this->requestData  = $requestData;
-    }
-    
-    public function setRequestBody($requestBody) 
-    {
-        $this->requestBody = $requestBody;
-    }
-
-    public function getRequestData() : array
-    {
-        return $this->requestData;
-    }
-
-    public function setConnectionData($connectionData)
-    {
-        $this->connectionData = $connectionData;
-    }
-    
-    public function getConnectionData() 
-    {
-        return $this->connectionData;
     }
 }

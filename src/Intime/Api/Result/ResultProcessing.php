@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api\Result;
 
@@ -47,8 +47,12 @@ class ResultProcessing
         $this->action = $action;
     }
 
-    public function getData(array $data) : array
+    public function getData(?array $data): ?array
     {
+        if (null === $data) {
+            return null;
+        }
+        
         $storageRow = [];
         
         $processingSetter               = ProcessingSetter::getInstance();

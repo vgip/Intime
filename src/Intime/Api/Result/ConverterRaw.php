@@ -4,7 +4,7 @@
  * Converter raw result format
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api\Result;
 
@@ -27,7 +27,14 @@ class ConverterRaw
         
         $entriesGet = $actionArrayKeyPrefixes[1].$actionArrayKey;
         $entryGet = $actionArrayKeyPrefixes[2].$actionArrayKey;
-        $res = $resRaw[$entriesGet][$entryGet];
+        $resRawArray = $resRaw[$entriesGet][$entryGet];
+        if (null === $resRawArray) {
+            $res = null;
+        } else if (isset($resRawArray[0])) {
+            $res = $resRawArray;
+        } else {
+            $res[0] = $resRawArray;
+        }
         
         return $res;
     }

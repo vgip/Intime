@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Dir;
 
@@ -19,32 +19,32 @@ class ActionAccordance
      * @var array 
      */
     private $actionAccordance = [
-        'country'                   => 'country_by_id',
-        'region'                    => 'area_filtered',
-        'district'                  => 'district_filtered',
-        'locality'                  => 'locality_filtered',
-        'branch'                    => 'branch_filtered',
-        'branch_work_hours'         => 'branch_work_hours',
-        'branch_api2'               => 'branch_by_dc',
-        'goods_description'         => 'goods_desc_by_id',
-        'packaging'                 => 'box_by_id',
-        'declaration_create'        => 'declaration_insert_update',
-        'declaration_update'        => 'declaration_update',
-        'declaration_delete'        => 'declaration_delete',
-        'declaration'               => 'info_tn',
-        'declaration_calculate'     => 'declaration_calculate',
-        'declaration_status'        => 'declaration_status_hist',
-        'declaration_status_min'    => 'decl_status_history',
+        'country'                               => 'country_by_id',
+        'region'                                => 'area_filtered',
+        'district'                              => 'district_filtered',
+        'locality'                              => 'locality_filtered',
+        'branch'                                => 'branch_filtered',
+        'branch_work_hours'                     => 'branch_work_hours',
+        'branch_api2'                           => 'branch_by_dc',
+        'content_description'                   => 'goods_desc_by_id',
+        'packaging'                             => 'box_by_id',
+        'declaration_create'                    => 'declaration_insert_update',
+        'declaration_update'                    => 'declaration_update',
+        'declaration_delete'                    => 'declaration_delete',
+        'declaration'                           => 'info_tn',
+        'declaration_calculate'                 => 'declaration_calculate',
+        'declaration_status'                    => 'decl_status_history',
+        'declaration_status_additional_number'  => 'declaration_status_hist',
     ];
     
     private $answerArrayKey = [
-        'declaration_create'        => 'declaration_ins_upd',
-        'declaration_update'        => 'declaration_update',
-        'declaration_delete'        => 'declaration_delete',
-        'declaration'               => 'info_tn',
-        'declaration_calculate'     => 'declaration_calculate',
-        'declaration_status'        => 'declaration_status_hist',
-        'declaration_status_min'    => 'get_decl_status_hist',
+        'declaration_create'                    => 'declaration_ins_upd',
+        'declaration_update'                    => 'declaration_update',
+        'declaration_delete'                    => 'declaration_delete',
+        'declaration'                           => 'info_tn',
+        'declaration_calculate'                 => 'declaration_calculate',
+        'declaration_status'                    => 'declaration_status_hist',
+        'declaration_status_additional_number'  => 'get_decl_status_hist',
     ];
     
     private $answerArrayKeyPrefixDefault = [

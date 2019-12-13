@@ -6,12 +6,12 @@
  * See available values to some methods in constants Vgip\Intime\Api\ConfigInterface class
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Vgip\Intime\Api;
 
 use Vgip\Intime\Api\Result\ResultConnectionInterface;
-use Vgip\Intime\Api\ConfigInterface;
+use Vgip\Intime\Api\ConfigDefault;
 use Vgip\Intime\Exception;
 
 Trait ConfigPropertyTrait
@@ -232,9 +232,9 @@ Trait ConfigPropertyTrait
         $res = null;
         
         $availableType = [
-            ConfigInterface::REST_CONTENT_TYPE_JSON,
-            ConfigInterface::REST_CONTENT_TYPE_XML,
-            ConfigInterface::REST_CONTENT_TYPE_TEXT,
+            ConfigDefault::REST_CONTENT_TYPE_JSON,
+            ConfigDefault::REST_CONTENT_TYPE_XML,
+            ConfigDefault::REST_CONTENT_TYPE_TEXT,
         ];
 
         if (!in_array($restContentType, $availableType, true)) {

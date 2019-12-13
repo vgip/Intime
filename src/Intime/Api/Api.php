@@ -14,7 +14,7 @@ use Vgip\Intime\Api\Connection\SoapFactory;
 use Vgip\Intime\Dir\ActionAccordance;
 use Vgip\Intime\Api\Result\ResultConnectionInterface;
 
-class Api //implements ApiInterface
+class Api implements ApiInterface
 {
     private $config;
     
@@ -47,8 +47,6 @@ class Api //implements ApiInterface
     
     /**
      * Wrap for AREA_FILTERED action
-     * 
-     * @param string $name - does not affect the output of results, any value is interpreted by the server as null
      */
     public function getRegion(int $id = null, ?int $countryId = 215, string $name = null): ResultConnectionInterface
     {
@@ -72,9 +70,7 @@ class Api //implements ApiInterface
     }
     
     /**
-     * Alias to getRegion() method
-     * 
-     * @param string $name - does not affect the output of results, any value is interpreted by the server as null
+     * Alias for getRegion() method
      */
     public function getArea(int $id = null, ?int $countryId = 215, string $name = null): ResultConnectionInterface
     {
@@ -86,7 +82,7 @@ class Api //implements ApiInterface
     /**
      * Wrap for DISTRICT_FILTERED action
      */
-    public function getDistrict(int $id = null, int $countryId = null, int $regionId = null, string $name = null): ResultConnectionInterface
+    public function getDistrict(int $id = null, ?int $countryId = 215, int $regionId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -105,7 +101,7 @@ class Api //implements ApiInterface
         if (null !== $name) {
             $data['name'] = $name;
         }
-        
+        print_r($data);
         $res = $this->createConnectionType('district', $data);
         
         return $res;
@@ -132,7 +128,7 @@ class Api //implements ApiInterface
     }
     
     /**
-     * Partial functionality of getDistrict() method
+     * Alias for getDistrict() method
      */
     public function getDistrictByAreaId(int $regionId = null): ResultConnectionInterface
     {
@@ -143,8 +139,10 @@ class Api //implements ApiInterface
     
     /**
      * Wrap for LOCALITY_FILTERED action
+     * CAUTION, calling a function without parameters (or all set to zero) 
+     * will return approximately 27,000 results
      */
-    public function getLocality(int $id = null, int $countryId = null, int $regionId = null, int $districtId = null, string $name = null): ResultConnectionInterface
+    public function getLocality(int $id = null, ?int $countryId = 215, int $regionId = null, int $districtId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -176,6 +174,16 @@ class Api //implements ApiInterface
     /**
      * Partial functionality of getLocality() method
      */
+    public function getLocalityById(int $id = null): ResultConnectionInterface
+    {
+        $res = $this->getLocality($id);
+        
+        return $res;
+    }
+    
+    /**
+     * Partial functionality of getLocality() method
+     */
     public function getLocalityByRegionId(int $regionId = null): ResultConnectionInterface
     {
         $res = $this->getLocality(null, null, $regionId);
@@ -184,11 +192,11 @@ class Api //implements ApiInterface
     }
     
     /**
-     * Partial functionality of getLocality() method
+     * Alias for getLocality() method
      */
     public function getLocalityByAreaId(int $regionId = null): ResultConnectionInterface
     {
-        $res = $this->getLocality(null, null, $regionId);
+        $res = $this->getLocalityByRegionId($regionId);
         
         return $res;
     }
@@ -206,7 +214,7 @@ class Api //implements ApiInterface
     /**
      * Wrap for BRANCH_FILTERED action
      */
-    public function getBranch(int $id = null, int $countryId = null, int $regionId = null, int $districtId = null, int $localityId = null, string $name = null): ResultConnectionInterface
+    public function getBranch(int $id = null, ?int $countryId = 215, int $regionId = null, int $districtId = null, int $localityId = null, string $name = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -242,7 +250,7 @@ class Api //implements ApiInterface
     /**
      * Partial functionality of getBranch() method
      */
-    public function getBranchById(int $id = null)
+    public function getBranchById(int $id = null): ResultConnectionInterface
     {
         $res = $this->getBranch($id);
         
@@ -252,13 +260,43 @@ class Api //implements ApiInterface
     /**
      * Partial functionality of getBranch() method
      */
-    public function getBranchByRegionId(int $regionId = null)
+    public function getBranchByRegionId(int $regionId = null): ResultConnectionInterface
     {
         $res = $this->getBranch(null, null, $regionId);
         
         return $res;
     }
+    
+    /**
+     * Alias for getBranchByRegionId() method
+     */
+    public function getBranchByAreaId(int $regionId = null): ResultConnectionInterface
+    {
+        $res = $this->getBranchByRegionId($regionId);
+        
+        return $res;
+    }
 
+    /**
+     * Partial functionality of getBranch() method
+     */
+    public function getBranchByDistrictId(int $districtId = null): ResultConnectionInterface
+    {
+        $res = $this->getBranch(null, null, null, $districtId);
+        
+        return $res;
+    }
+    
+    /**
+     * Partial functionality of getBranch() method
+     */
+    public function getBranchByLocalityId(int $localityId = null): ResultConnectionInterface
+    {
+        $res = $this->getBranch(null, null, null, null, $localityId);
+        
+        return $res;
+    }
+    
     /**
      * WARNING: a call without parameters returns a large amount of data
      *
@@ -291,7 +329,7 @@ class Api //implements ApiInterface
         return $res;
     }
     
-    public function getGoodsDescription(int $id = null): ResultConnectionInterface
+    public function getContentDescription(int $id = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -299,7 +337,7 @@ class Api //implements ApiInterface
             $data['id'] = $id;
         }
         
-        $res = $this->createConnectionType('goods_description', $data);
+        $res = $this->createConnectionType('content_description', $data);
         
         return $res;
     }
@@ -344,7 +382,7 @@ class Api //implements ApiInterface
         return $res;
     }
     
-    public function getDeclaration(string $id = null)
+    public function getDeclaration(string $id = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -364,7 +402,7 @@ class Api //implements ApiInterface
         return $res;
     }
     
-    public function getDeclarationStatus(string $id = null, string $additionalId = null)
+    public function getDeclarationStatus(string $id = null, string $additionalId = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -381,7 +419,7 @@ class Api //implements ApiInterface
         return $res;
     }
     
-    public function getDeclarationStatusMin(string $id = null)
+    public function getDeclarationStatusByAdditionalNumber(string $id = null, string $additionalNumber = null): ResultConnectionInterface
     {
         $data = [];
         
@@ -389,7 +427,11 @@ class Api //implements ApiInterface
             $data['decl_num'] = $id;
         }
         
-        $res = $this->createConnectionType('declaration_status_min', $data);
+        if (null !== $additionalNumber) {
+            $data['p_dop_num'] = $additionalNumber;
+        }
+        
+        $res = $this->createConnectionType('declaration_status_additional_number', $data);
         
         return $res;
     }
@@ -415,8 +457,10 @@ class Api //implements ApiInterface
         
         $res = $connection->connect($actionApiName, $data, $this->config);
 
+        $dataSet = (count($data) > 0) ? $data : null;
+        
         $this->resultConnection->setAction($action);
-        $this->resultConnection->setRequestData($data);
+        $this->resultConnection->setRequestData($dataSet);
         
         return $this->resultConnection;
     }
